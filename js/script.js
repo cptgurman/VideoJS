@@ -12,8 +12,7 @@ window.onload = function () {
 
     window.onresize = function resize() {
         let video = document.querySelector('.vjs-tech');
-        console.log(video.offsetHeight);
-        document.querySelector('.chat').style.height = video.offsetHeight - 35 + 'px';
+        document.querySelector('.content__chat').style.height = video.offsetHeight - 35 + 'px';
 
     }
 
@@ -96,13 +95,13 @@ function loadChat() {
     if (document.querySelector('.chat') == null) {
         if (parse != null) {
             chatView.innerHTML = '<div class="chat"></div>' + chatView.innerHTML;
-            document.querySelector('.chat').style.height = video.offsetHeight - 35 + 'px';
+            document.querySelector('.content__chat').style.height = video.offsetHeight - 35 + 'px';
             let chat = document.querySelector('.chat');
             chat.innerHTML = '';
             for (let object of parse) {
                 chat.innerHTML = chat.innerHTML + `<div class="chat_messages"> 
                 <img class='avatar' src="./media/avatar.png" alt=""> 
-                <p class="user__login"> ${object.login} </p> 
+                <p class="user__login"> User </p> 
                 <p class="user__message"> ${object.message}</p> 
                 <p class="user__time"> ${object.msgTime} </p> 
                 </div>`;
@@ -110,7 +109,7 @@ function loadChat() {
 
         } else {
             chatView.innerHTML = '<div class="chat"></div>' + chatView.innerHTML;
-            document.querySelector('.chat').style.height = video.offsetHeight - 35 + 'px';
+            document.querySelector('.content__chat').style.height = video.offsetHeight - 35 + 'px';
             let chat = document.querySelector('.chat');
             chat.innerHTML = `<div class="chat_messages"> 
         <img class='avatar' src="./media/avatar.png" alt=""> 
@@ -134,22 +133,22 @@ function sendMessage() {
 
     let messageObjects = {};
 
-    if ((message.value != '') & (login.value != '')) {
+    if (message.value != '') {
         messageObjects.message = message.value;
-        messageObjects.login = login.value;
+
         let now = new Date();
         messageObjects.msgTime = `${now.getHours()}:${now.getMinutes()}`;
 
         chat.innerHTML = chat.innerHTML + `<div class="chat_messages"> 
         <img class='avatar' src="./media/avatar.png" alt=""> 
-        <p class="user__login"> ${messageObjects.login} </p>  
+        <p class="user__login"> User </p>  
         <p class="user__message"> ${messageObjects.message}</p> 
         <p class="user__time"> ${messageObjects.msgTime} </p> 
         </div>`;
 
         //Обнуление полей
         message.value = '';
-        login.value = '';
+
 
         //Запись в storage
         messagesArray.push(messageObjects);

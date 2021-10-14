@@ -37,14 +37,14 @@
             <h2 class="content__title">Space Player</h2>
             <div class="content__chat">
                 <!-- сюда вставляется div .chat -->
-            </div>
-            <div class="content__sendmsg">
-                <p><input class="login" type="text" placeholder="login"></input></p>
-                <p><textarea class="message" placeholder="message"></textarea></p>
-                <p><button class="send" onclick="sendMessage()">send</button></p>
-                <!-- <p><button class="clear" onclick="clearStorage()">Очистить чат</button></p> -->
+                <div class="content__sendmsg">
+                    <textarea class="message" placeholder="message"></textarea>
+                    <!-- <p><button class="send" onclick="sendMessage()">send</button></p> -->
+                    <img class='send' onclick="sendMessage()" src="./media/send_but.png" alt="">
 
+                </div>
             </div>
+
             <div class="content__video">
                 <video id="my-player" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto"
                     poster="media/image.jpg">
@@ -53,6 +53,7 @@
             </div>
 
         </section>
+        <!-- <p><button class="clear" onclick="clearStorage()">Очистить чат</button></p> -->
     </div>
     </section>
     </div>
