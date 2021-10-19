@@ -6,6 +6,7 @@ let messagesArray = [];
 
 window.onload = function () {
 
+    videojs('my-player');
     let player = videojs('my-player');
     let videoHeight = document.querySelector('.vjs-tech');
     player.on('play', loadChat);
