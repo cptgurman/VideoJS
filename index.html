@@ -33,35 +33,22 @@
             </div>
         </section>
         <section class="content">
-
+            <!-- <p><button class="clear" onclick="clearStorage()">Очистить чат</button></p> -->
             <h2 class="content__title">Space Player</h2>
-            <div class="content__chat">
-                <!-- сюда вставляется div .chat -->
-                <div class="content__sendmsg">
-                    <textarea class="message" placeholder="message"></textarea>
-                    <!-- <p><button class="send" onclick="sendMessage()">send</button></p> -->
-                    <img class='send' onclick="sendMessage()" src="./media/send_but.png" alt="">
-
-                </div>
-            </div>
-
             <div class="content__video">
                 <video id="my-player" class="video-js vjs-big-play-centered vjs-16-9" controls preload="auto"
                     poster="media/image.jpg">
                     <source src="media/video.mp4" type="video/mp4">
                 </video>
             </div>
-
         </section>
-        <!-- <p><button class="clear" onclick="clearStorage()">Очистить чат</button></p> -->
     </div>
     </section>
     </div>
 
     <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+    <script src="js/plugin.js"></script>
     <script src="js/script.js"></script>
-
-
 </body>
 
 </html>

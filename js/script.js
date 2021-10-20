@@ -1,28 +1,15 @@
 "use strict"
-
-let parse;
-let chatView = document.querySelector('.content__chat');
-let messagesArray = [];
-
+//Загрузка страницы
 window.onload = function () {
 
+    //Инициализация плеера
     videojs('my-player');
     let player = videojs('my-player');
-    let videoHeight = document.querySelector('.vjs-tech');
-    player.on('play', loadChat);
 
-    window.onresize = function resize() {
-        let video = document.querySelector('.vjs-tech');
-        document.querySelector('.content__chat').style.height = video.offsetHeight - 35 + 'px';
+    //chat по кнопке play
+    player.on('play', chat);
 
-    }
-
-
-    parse = JSON.parse(localStorage.getItem("messagesStorage"));
-    if (parse != null) {
-        messagesArray = parse;
-    }
-
+    //параллакс
     let parallax = document.querySelector('.parallax');
 
     if (parallax) {
@@ -79,95 +66,10 @@ window.onload = function () {
 
 
 
-function clearChat() {
-
-    chat.innerHTML = `<div class="chat_messages">
-        <img class='avatar' src="./media/avatar.png" alt=""> 
-        <p class="user__login">Admin</p> 
-        <p class="user__message"> Добро пожаловать в чат </p> 
-        <p class="user__time"></p> 
-        </div>`;
-    messagesArray.shift();
-}
 
 
-function loadChat() {
-    let video = document.querySelector('.vjs-tech');
-    if (document.querySelector('.chat') == null) {
-        if (parse != null) {
-            chatView.innerHTML = '<div class="chat"></div>' + chatView.innerHTML;
-            document.querySelector('.content__chat').style.height = video.offsetHeight - 35 + 'px';
-            let chat = document.querySelector('.chat');
-            chat.innerHTML = '';
-            for (let object of parse) {
-                chat.innerHTML = chat.innerHTML + `<div class="chat_messages"> 
-                <img class='avatar' src="./media/avatar.png" alt=""> 
-                <p class="user__login"> User </p> 
-                <p class="user__message"> ${object.message}</p> 
-                <p class="user__time"> ${object.msgTime} </p> 
-                </div>`;
-            }
-
-        } else {
-            chatView.innerHTML = '<div class="chat"></div>' + chatView.innerHTML;
-            document.querySelector('.content__chat').style.height = video.offsetHeight - 35 + 'px';
-            let chat = document.querySelector('.chat');
-            chat.innerHTML = `<div class="chat_messages"> 
-        <img class='avatar' src="./media/avatar.png" alt=""> 
-        <p class="user__login"> Admin </p> 
-        <p class="user__message"> Добро пожаловать в чат</p> 
-        <p class="user__time">  </p> 
-        </div>`;
-        }
-    }
-}
-
-//Отправка сообщений и сохранение в localstorage
-function sendMessage() {
-    let message = document.querySelector('.message'), //сообщение
-        chatLogin = document.querySelector('.chat__login'),
-        userMessage = document.querySelector('.user__message'),
-        login = document.querySelector('.login'),
-        chatMessages = document.querySelector('.chat_messages'),
-        chat = document.querySelector('.chat');
 
 
-    let messageObjects = {};
-
-    if (message.value != '') {
-        messageObjects.message = message.value;
-
-        let now = new Date();
-        messageObjects.msgTime = `${now.getHours()}:${now.getMinutes()}`;
-
-        chat.innerHTML = chat.innerHTML + `<div class="chat_messages"> 
-        <img class='avatar' src="./media/avatar.png" alt=""> 
-        <p class="user__login"> User </p>  
-        <p class="user__message"> ${messageObjects.message}</p> 
-        <p class="user__time"> ${messageObjects.msgTime} </p> 
-        </div>`;
-
-        //Обнуление полей
-        message.value = '';
-
-
-        //Запись в storage
-        messagesArray.push(messageObjects);
-        console.log(messagesArray);
-        localStorage.setItem('messagesStorage', JSON.stringify(messagesArray));
-
-    } else {
-        alert('Не все поля заполнены!');
-        message.value = '';
-        login.value = '';
-    }
-}
-
-
-//очистить storage
-function clearStorage() {
-    localStorage.clear();
-}
 
 
 
