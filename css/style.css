@@ -304,8 +304,8 @@ body {
 }
 
 .send:hover{
-    width: 70%;
-    height:70%;
+    width: 80%;
+    height:80%;
     font-size: larger;
     transition: 0.2s;
 }
