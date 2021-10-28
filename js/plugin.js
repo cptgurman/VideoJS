@@ -4,6 +4,34 @@ let messagesArray = [];
 
 
 function chat() {
+
+    //Создаем кнопку
+    let Button = videojs.getComponent('Button');
+    let MyButton = videojs.extend(Button, {
+
+
+        innerHTML: 'asdasdasd',
+        constructor: function () {
+            Button.apply(this, arguments);
+            this.addClass('chatButton');
+
+        },
+
+        handleClick: function () {
+            console.log('jopa');
+        }
+
+
+    });
+    videojs.registerComponent('ChatButton', MyButton);
+    let player = videojs('my-player');
+    player.getChild('controlBar').addChild('ChatButton', {
+        innerHTML: 'asdasdasd',
+    });
+
+
+
+
     //Список сообщений
     parse = JSON.parse(localStorage.getItem("messagesStorage"));
     if (parse != null) {

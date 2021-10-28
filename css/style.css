@@ -334,6 +334,14 @@ body {
 	margin-top: 5px;
 }
 
+
+
+.chatButton{
+    background-color: aqua;
+    background-image: url(media/icon.svg);
+}
+
+
 @media (max-width: 479px) {
     .parallax_title {
         font-size: 36px;
