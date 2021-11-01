@@ -1,41 +1,51 @@
 "use strict"
 let parse;
-// let messagesArray = [];
-let messagesArray = [
-    {
-        "id": "0",
-        "userName": "Admin",
-        "isPinned": true,
-        "isAdmin": true,
-        "message": "Дополнительная скидка 15% по промокоду ВЕСНА15",
-        "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
-        "answerTo": null
-    }, {
-        "id": "1",
-        "userName": "Костя Морозов",
-        "isPinned": false,
-        "isAdmin": false,
-        "message": "Надюша начинай",
-        "avatar": "https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png",
-        "answerTo": null
-    }, {
-        "id": "2",
-        "userName": "Рузанна Комиссарова",
-        "isPinned": false,
-        "isAdmin": false,
-        "message": "Здравствуйте, как купить туфли",
-        "avatar": null,
-        "answerTo": null
-    }, {
-        "id": "3",
-        "userName": "Admin",
-        "isPinned": false,
-        "isAdmin": true,
-        "message": "Здравствуйте! Можно перейти по ссылке на наш сайт и оформить заказ. Ссылки на товары под видео",
-        "avatar": null,
-        "answerTo": "2"
-    }
-];
+let messagesArray = [];
+
+
+//Список сообщений
+parse = JSON.parse(localStorage.getItem("messagesStorage"));
+console.log(parse);
+if (parse != null) {
+    messagesArray = parse;
+} else {
+    messagesArray = [
+        {
+            "id": "0",
+            "userName": "Admin",
+            "isPinned": true,
+            "isAdmin": true,
+            "message": "Дополнительная скидка 15% по промокоду ВЕСНА15",
+            "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
+            "answerTo": null
+        }, {
+            "id": "1",
+            "userName": "Костя Морозов",
+            "isPinned": false,
+            "isAdmin": false,
+            "message": "Надюша начинай",
+            "avatar": "https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png",
+            "answerTo": null
+        }, {
+            "id": "2",
+            "userName": "Рузанна Комиссарова",
+            "isPinned": false,
+            "isAdmin": false,
+            "message": "Здравствуйте, как купить туфли",
+            "avatar": null,
+            "answerTo": null
+        }, {
+            "id": "3",
+            "userName": "Admin",
+            "isPinned": false,
+            "isAdmin": true,
+            "message": "Здравствуйте! Можно перейти по ссылке на наш сайт и оформить заказ. Ссылки на товары под видео",
+            "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
+            "answerTo": "2"
+        }
+    ];
+}
+
 
 function chat() {
     //Создаем кнопку если ее нет
@@ -77,11 +87,7 @@ function chat() {
 
 
 
-    //Список сообщений
-    parse = JSON.parse(localStorage.getItem("messagesStorage"));
-    if (parse != null) {
-        messagesArray.push(parse);
-    }
+
 
     //Проверка чата
     if (document.querySelector('.vjs-chat') == null) {
@@ -100,6 +106,37 @@ function chat() {
         divPlugin.prepend(divChat);
         divChat.innerHTML = '';
 
+        //Закрепленное сообщение (каркас)
+        let divPinned = document.createElement('div');
+        divPinned.classList.add('pinned');
+        divPlugin.prepend(divPinned);
+        divPinned.innerHTML = '';
+
+        //Закрепленное сообщение (каркас для сообщения)
+        let divPinnedMess = document.createElement('div');
+        divPinnedMess.classList.add('pinnedMess');
+        divPinned.prepend(divPinnedMess);
+        divPinnedMess.innerHTML = '';
+
+
+        //Закрепленное сообщение (текст)
+        let divPinnedText = document.createElement('div');
+        divPinnedText.classList.add('pinnedText');
+        divPinnedMess.prepend(divPinnedText);
+        divPinnedText.innerHTML = '';
+
+        //Закрепленное сообщение (имя)
+        let divPinnedName = document.createElement('div');
+        divPinnedName.classList.add('pinnedName');
+        divPinnedMess.prepend(divPinnedName);
+        divPinnedName.innerHTML = '';
+
+        //Закрепленное сообщение (иконка)
+        let divPinnedIco = document.createElement('img');
+        divPinnedIco.classList.add('pinnedIco');
+        divPinnedIco.src = 'https://cdn-icons.flaticon.com/png/512/1514/premium/1514009.png?token=exp=1635714347~hmac=a37662712510cce414e8ab236dad6dd8';
+        divPinned.prepend(divPinnedIco);
+
         //Блок для отправки
         let divSendMsg = document.createElement('div');
         divSendMsg.classList.add('sendMsg');
@@ -110,16 +147,34 @@ function chat() {
         textArea.classList.add('message');
         divSendMsg.prepend(textArea);
         textArea.placeholder = 'message';
+        //Отправка по Enter
+        textArea.addEventListener('keydown', e => {
+            if (e.keyCode == 13) {
+                sendMessage(textArea, divPlugin);
+            }
+        });
+        //Изменение высоты сообщения
+        textArea.addEventListener('keyup', e => {
+            textArea.style.height = 'auto';
+            let txtheight = e.target.scrollHeight;
+            textArea.style.height = `${txtheight}px`;
+            divPlugin.style.gridTemplate = `1fr ${txtheight + 10}px / 1fr`;
+        });
 
-        //Кнопка
-        let button = document.createElement('div');
-        button.classList.add('send');
-        button.innerHTML = 'send';
-        divSendMsg.prepend(button);
-        button.onclick = sendMessage;
+        //Кнопка лайк
+        let likeButton = document.createElement('img');
+        likeButton.classList.add('like');
+        likeButton.src = 'https://cdn-icons.flaticon.com/png/512/3128/premium/3128313.png?token=exp=1635713740~hmac=30c263d2134ae27c360ebae057db5b34'
+        divSendMsg.prepend(likeButton);
+
 
         //Выгрузка сообщений
         for (let object of messagesArray) {
+            if (object.isPinned == true) {
+                divPinnedText.innerHTML = object.message;
+                divPinnedName.innerHTML = object.userName;
+
+            }
             if (object.avatar == null) {
                 divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
                 <img class='avatar' src="./media/avatar.png" alt=""> 
@@ -135,32 +190,50 @@ function chat() {
             }
 
         }
+
+        let userMessage = document.querySelectorAll('.user__message');
+        console.log(userMessage);
+        userMessage.forEach(element => {
+            element.style.width = `${divChat.offsetWidth - 100}px`;
+        });
     }
 }
 
 //Отправка сообщений и сохранение в localstorage
-function sendMessage() {
+function sendMessage(textArea, divPlugin) {
     let message = document.querySelector('.message'), //сообщение
         chat = document.querySelector('.chat');
 
-    let messageObjects = {};
+    let messageObjects = {
+        "id": null,
+        "userName": "Герман Креханов",
+        "isPinned": false,
+        "isAdmin": false,
+        "message": null,
+        "avatar": null,
+        "answerTo": null
+    };
 
     if (message.value != '') {
         messageObjects.message = message.value;
+        messageObjects.id = `${messagesArray.length}`;
+        console.log(messagesArray.length);
 
-        let now = new Date();
-        messageObjects.msgTime = `${now.getHours()}:${now.getMinutes()}`;
+
 
         //Вставка сообщения
         chat.innerHTML = chat.innerHTML + `<div class="chat_messages"> 
         <img class='avatar' src="./media/avatar.png" alt=""> 
-        <p class="user__login"> User </p>  
+        <p class="user__login"> ${messageObjects.userName} </p>  
         <p class="user__message"> ${messageObjects.message}</p> 
-        <p class="user__time"> ${messageObjects.msgTime} </p> 
         </div>`;
 
-        //Обнуление полей
+        //Обнуление полей и возврат рамера
         message.value = '';
+        message.blur();
+        textArea.style.height = 'auto';
+        divPlugin.style.gridTemplate = `1fr auto / 1fr`;
+
 
         //Запись в storage
         messagesArray.push(messageObjects);
@@ -179,23 +252,15 @@ function clearStorage() {
 
 //изменение размеров чата
 window.onresize = function resize() {
-    let vjshw = document.querySelector('.vjs-chat')
+    let vjshw = document.querySelector('.vjs-chat');
     let video = document.querySelector('.vjs-text-track-display');
     vjshw.style.height = video.offsetHeight + 'px';
-    document.querySelectorAll('.user__login').forEach((item, index, array) => {
-        item.style.width = vjshw.offsetWidth - 50 + 'px';
-    }
-    );
-
-    document.querySelectorAll('.user__message').forEach((item, index, array) => {
-        item.style.width = vjshw.offsetWidth - 50 + 'px';
-    }
-    );
-
-    document.querySelectorAll('.user__time').forEach((item, index, array) => {
-        item.style.width = vjshw.offsetWidth - 50 + 'px';
-    }
-    );
+    let divChat = document.querySelector('.vjs-chat')
+    let userMessage = document.querySelectorAll('.user__message');
+    console.log(userMessage);
+    userMessage.forEach(element => {
+        element.style.width = `${divChat.offsetWidth - 100}px`;
+    });
 
 }
 
