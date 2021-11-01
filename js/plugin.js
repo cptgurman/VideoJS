@@ -175,19 +175,39 @@ function chat() {
                 divPinnedName.innerHTML = object.userName;
 
             }
-            if (object.avatar == null) {
-                divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                <img class='avatar' src="./media/avatar.png" alt=""> 
-                <p class="user__login"> ${object.userName} </p> 
-                <p class="user__message"> ${object.message}</p> 
-                </div>`;
+            if (object.isAdmin == true) {
+                if (object.avatar == null) {
+                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages admin"> 
+                    <img class='avatar' src="./media/avatar.png" alt=""> 
+                    <p class="user__login"> ${object.userName} </p> 
+                    <p class="user__message"> ${object.message}</p> 
+                    </div>`;
+                } else {
+                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages admin"> 
+                    <img class='avatar' src="${object.avatar}" alt=""> 
+                    <p class="user__login"> ${object.userName} </p> 
+                    <p class="user__message"> ${object.message}</p> 
+                    </div>`;
+                }
             } else {
-                divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                <img class='avatar' src="${object.avatar}" alt=""> 
-                <p class="user__login"> ${object.userName} </p> 
-                <p class="user__message"> ${object.message}</p> 
-                </div>`;
+                if (object.avatar == null) {
+                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
+                    <img class='avatar' src="./media/avatar.png" alt=""> 
+                    <p class="user__login"> ${object.userName} </p> 
+                    <p class="user__message"> ${object.message}</p> 
+                    </div>`;
+                } else {
+                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
+                    <img class='avatar' src="${object.avatar}" alt=""> 
+                    <p class="user__login"> ${object.userName} </p> 
+                    <p class="user__message"> ${object.message}</p> 
+                    </div>`;
+                }
+
             }
+
+
+
 
         }
 

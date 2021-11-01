@@ -308,6 +308,10 @@ body {
     margin-right: 20px;
 }
 
+.admin{
+    background-color: aqua;
+    border-radius: 5px;
+}
 
 
 .user__login{
