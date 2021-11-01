@@ -217,8 +217,6 @@ function sendMessage(textArea, divPlugin) {
     if (message.value != '') {
         messageObjects.message = message.value;
         messageObjects.id = `${messagesArray.length}`;
-        console.log(messagesArray.length);
-
 
 
         //Вставка сообщения
