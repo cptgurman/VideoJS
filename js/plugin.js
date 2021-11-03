@@ -5,7 +5,6 @@ let messagesArray = [];
 
 //Список сообщений
 parse = JSON.parse(localStorage.getItem("messagesStorage"));
-console.log(parse);
 if (parse != null) {
     messagesArray = parse;
 } else {
@@ -31,7 +30,7 @@ if (parse != null) {
             "userName": "Рузанна Комиссарова",
             "isPinned": false,
             "isAdmin": false,
-            "message": "Здравствуйте, как купить туфли",
+            "message": "Здравствуйте, как купить туфли?",
             "avatar": null,
             "answerTo": null
         }, {
@@ -134,8 +133,14 @@ function chat() {
         //Закрепленное сообщение (иконка)
         let divPinnedIco = document.createElement('img');
         divPinnedIco.classList.add('pinnedIco');
-        divPinnedIco.src = 'https://cdn-icons.flaticon.com/png/512/1514/premium/1514009.png?token=exp=1635714347~hmac=a37662712510cce414e8ab236dad6dd8';
+        divPinnedIco.src = "./media/pin.png";
         divPinned.prepend(divPinnedIco);
+
+        //Закрепленное сообщение (линия)
+        let divPinnedLine = document.createElement('div');
+        divPinnedLine.classList.add('pinnedLine');
+        divPinned.prepend(divPinnedLine);
+       
 
         //Блок для отправки
         let divSendMsg = document.createElement('div');
@@ -176,7 +181,7 @@ function chat() {
         //Кнопка лайк
         let likeButton = document.createElement('img');
         likeButton.classList.add('like');
-        likeButton.src = 'https://cdn-icons.flaticon.com/png/512/3128/premium/3128313.png?token=exp=1635713740~hmac=30c263d2134ae27c360ebae057db5b34'
+        likeButton.src = './media/like.png'
         divSendMsg.prepend(likeButton);
 
 
@@ -187,46 +192,69 @@ function chat() {
                 divPinnedName.innerHTML = object.userName;
 
             }
-            if (object.isAdmin == true) {
-                if (object.avatar == null) {
-                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages admin"> 
-                    <img class='avatar' src="./media/avatar.png" alt=""> 
-                    <p class="user__login"> ${object.userName} </p> 
-                    <p class="user__message"> ${object.message}</p> 
-                    </div>`;
+            if(object.answerTo == null){
+                if (object.isAdmin == true) {
+                    if (object.avatar == null) {
+                        divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages "> 
+                        <img class="avatar" src="./media/avatar.png" alt="">
+                        <div class="message__wrapper admin"> 
+                        <p class="user__login admin"> ${object.userName} </p> 
+                        <p class="user__message admin"> ${object.message}</p>
+                        </div>
+                        </div>`;
+                    } else {
+                        divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages "> 
+                        <img class='avatar' src="${object.avatar}" alt=""> 
+                        <div class="message__wrapper admin"> 
+                        <p class="user__login admin"> ${object.userName} </p> 
+                        <p class="user__message admin"> ${object.message}</p> 
+                        </div>
+                        </div>`;
+                    }
                 } else {
-                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages admin"> 
-                    <img class='avatar' src="${object.avatar}" alt=""> 
-                    <p class="user__login"> ${object.userName} </p> 
-                    <p class="user__message"> ${object.message}</p> 
-                    </div>`;
+                    if (object.avatar == null) {
+                        divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
+                        <img class='avatar' src="./media/avatar.png" alt=""> 
+                        <div class="message__wrapper">
+                        <p class="user__login"> ${object.userName} </p> 
+                        <p class="user__message"> ${object.message}</p> 
+                        </div>
+                        </div>`;
+                    } else {
+                        divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
+                        <img class='avatar' src="${object.avatar}" alt=""> 
+                        <div class="message__wrapper">
+                        <p class="user__login"> ${object.userName} </p> 
+                        <p class="user__message"> ${object.message}</p> 
+                        </div>
+                        </div>`;
+                    }
                 }
-            } else {
-                if (object.avatar == null) {
-                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                    <img class='avatar' src="./media/avatar.png" alt=""> 
-                    <p class="user__login"> ${object.userName} </p> 
-                    <p class="user__message"> ${object.message}</p> 
-                    </div>`;
-                } else {
-                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                    <img class='avatar' src="${object.avatar}" alt=""> 
-                    <p class="user__login"> ${object.userName} </p> 
-                    <p class="user__message"> ${object.message}</p> 
-                    </div>`;
-                }
-
+            }else{
+                let answerMsg = messagesArray[object.answerTo];
+                divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
+                <img class="avatar" src="${object.avatar}" alt="">
+                <div class="message__wrapper admin "> 
+                <div class="answer">
+                    <div class="leftLine">
+                    </div>
+                    <p class="answer_user admin"> ${answerMsg.userName} </p> 
+                    <p class="answer_msg admin"> ${answerMsg.message} </p> 
+                </div>
+                    <p class="user__login admin"> ${object.userName} </p> 
+                    <p class="user__message admin"> ${object.message}</p>
+                </div>
+                </div>`;                     
             }
-
-
-
-
         }
 
-        let userMessage = document.querySelectorAll('.user__message');
-        console.log(userMessage);
-        userMessage.forEach(element => {
-            element.style.width = `${divChat.offsetWidth - 100}px`;
+        //Ширина сообщений
+        let wrapperWidth = document.querySelectorAll('.message__wrapper');
+        console.log(wrapperWidth);
+        wrapperWidth.forEach(element => {
+            if(element.offsetWidth >= divChat.offsetWidth){
+                element.style.width = `${divChat.offsetWidth - 100}px`;}
+            
         });
     }
 }
@@ -255,8 +283,10 @@ function sendMessage(textArea, divPlugin) {
         let size = document.querySelector('.user__message');
         chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
         <img class='avatar' src="${messageObjects.avatar}" alt=""> 
+        <div class="message__wrapper">
         <p class="user__login"> ${messageObjects.userName} </p>  
         <p class="user__message" style="width: ${size.offsetWidth}px"> ${messageObjects.message}</p> 
+        </div>
         </div>`;
 
         //Обнуление полей и возврат рамера
