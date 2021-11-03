@@ -317,9 +317,12 @@ window.onresize = function resize() {
     let video = document.querySelector('.vjs-text-track-display');
     vjshw.style.height = video.offsetHeight + 'px';
     let divChat = document.querySelector('.vjs-chat')
-    let userMessage = document.querySelectorAll('.user__message');
-    userMessage.forEach(element => {
-        element.style.width = `${divChat.offsetWidth - 100}px`;
+    let wrapperWidth = document.querySelectorAll('.message__wrapper');
+    console.log(wrapperWidth);
+    wrapperWidth.forEach(element => {
+        if(element.offsetWidth >= divChat.offsetWidth){
+            element.style.width = `${divChat.offsetWidth - 100}px`;}
+        
     });
 
 }
