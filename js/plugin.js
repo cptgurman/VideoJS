@@ -142,11 +142,22 @@ function chat() {
         divSendMsg.classList.add('sendMsg');
         divPlugin.prepend(divSendMsg);
 
+        //Блок сообщение + аватарка
+        let divMes = document.createElement('div');
+        divMes.classList.add('msgWrapper');
+        divSendMsg.prepend(divMes);
+
+        //аватарка
+        let avatarIco = document.createElement('img');
+        avatarIco.classList.add('avatarIco');
+        avatarIco.src = "./media/avatar1.png";
+        divMes.prepend(avatarIco);
+
         //Текст сообщения
         let textArea = document.createElement('textarea');
         textArea.classList.add('message');
-        divSendMsg.prepend(textArea);
-        textArea.placeholder = 'message';
+        divMes.prepend(textArea);
+        textArea.placeholder = 'Добавить комментарий';
         //Отправка по Enter
         textArea.addEventListener('keydown', e => {
             if (e.keyCode == 13) {
@@ -157,8 +168,9 @@ function chat() {
         textArea.addEventListener('keyup', e => {
             textArea.style.height = 'auto';
             let txtheight = e.target.scrollHeight;
+            console.log(txtheight);
             textArea.style.height = `${txtheight}px`;
-            divPlugin.style.gridTemplate = `1fr ${txtheight + 10}px / 1fr`;
+            divPlugin.style.gridTemplate = `1fr ${txtheight + 25}px / 1fr`;
         });
 
         //Кнопка лайк
@@ -230,7 +242,7 @@ function sendMessage(textArea, divPlugin) {
         "isPinned": false,
         "isAdmin": false,
         "message": null,
-        "avatar": null,
+        "avatar": "./media/avatar1.png",
         "answerTo": null
     };
 
@@ -240,10 +252,11 @@ function sendMessage(textArea, divPlugin) {
 
 
         //Вставка сообщения
-        chat.innerHTML = chat.innerHTML + `<div class="chat_messages"> 
-        <img class='avatar' src="./media/avatar.png" alt=""> 
+        let size = document.querySelector('.user__message');
+        chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
+        <img class='avatar' src="${messageObjects.avatar}" alt=""> 
         <p class="user__login"> ${messageObjects.userName} </p>  
-        <p class="user__message"> ${messageObjects.message}</p> 
+        <p class="user__message" style="width: ${size.offsetWidth}px"> ${messageObjects.message}</p> 
         </div>`;
 
         //Обнуление полей и возврат рамера
@@ -275,7 +288,6 @@ window.onresize = function resize() {
     vjshw.style.height = video.offsetHeight + 'px';
     let divChat = document.querySelector('.vjs-chat')
     let userMessage = document.querySelectorAll('.user__message');
-    console.log(userMessage);
     userMessage.forEach(element => {
         element.style.width = `${divChat.offsetWidth - 100}px`;
     });
