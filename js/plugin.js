@@ -175,7 +175,7 @@ function chat() {
             let txtheight = e.target.scrollHeight;
             console.log(txtheight);
             textArea.style.height = `${txtheight}px`;
-            divPlugin.style.gridTemplate = `1fr ${txtheight + 25}px / 1fr`;
+            divPlugin.style.gridTemplate = `auto 1fr ${txtheight + 25}px / 1fr`;
         });
 
         //Кнопка лайк
@@ -191,7 +191,7 @@ function chat() {
                 divPinnedText.innerHTML = object.message;
                 divPinnedName.innerHTML = object.userName;
 
-            }
+            }else{
             if(object.answerTo == null){
                 if (object.isAdmin == true) {
                     if (object.avatar == null) {
@@ -245,8 +245,9 @@ function chat() {
                     <p class="user__message admin"> ${object.message}</p>
                 </div>
                 </div>`;                     
+                }
             }
-        }
+         }
 
         //Ширина сообщений
         let wrapperWidth = document.querySelectorAll('.message__wrapper');
@@ -254,7 +255,6 @@ function chat() {
         wrapperWidth.forEach(element => {
             if(element.offsetWidth >= divChat.offsetWidth){
                 element.style.width = `${divChat.offsetWidth - 100}px`;}
-            
         });
     }
 }
@@ -280,12 +280,14 @@ function sendMessage(textArea, divPlugin) {
 
 
         //Вставка сообщения
-        let size = document.querySelector('.user__message');
+        // let size = document.querySelector('.user__message');
+        // if(element.offsetWidth >= divChat.offsetWidth){
+        //     element.style.width = `${divChat.offsetWidth - 100}px`;}
         chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
         <img class='avatar' src="${messageObjects.avatar}" alt=""> 
         <div class="message__wrapper">
         <p class="user__login"> ${messageObjects.userName} </p>  
-        <p class="user__message" style="width: ${size.offsetWidth}px"> ${messageObjects.message}</p> 
+        <p class="user__message" style="width: auto"> ${messageObjects.message}</p> 
         </div>
         </div>`;
 
@@ -293,7 +295,7 @@ function sendMessage(textArea, divPlugin) {
         message.value = '';
         message.blur();
         textArea.style.height = 'auto';
-        divPlugin.style.gridTemplate = `1fr auto / 1fr`;
+        divPlugin.style.gridTemplate = `auto 1fr auto / 1fr`;
 
 
         //Запись в storage
