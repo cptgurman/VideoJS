@@ -204,7 +204,6 @@ body {
     align-self: flex-start;
     max-width: 100%;
     margin-bottom: 10px;
-    margin-right: 10px;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.404);
     backdrop-filter: blur(5px);
@@ -264,7 +263,7 @@ body {
 }
 
 .chat::-webkit-scrollbar {
-    width: 10px;
+    width: 0px;
     background-color: rgba(0, 0, 255, 0);
 }
   

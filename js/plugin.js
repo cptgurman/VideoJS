@@ -173,7 +173,6 @@ function chat() {
         textArea.addEventListener('keyup', e => {
             textArea.style.height = 'auto';
             let txtheight = e.target.scrollHeight;
-            console.log(txtheight);
             textArea.style.height = `${txtheight}px`;
             divPlugin.style.gridTemplate = `auto 1fr ${txtheight + 25}px / 1fr`;
         });
@@ -197,17 +196,17 @@ function chat() {
                         if (object.avatar == null) {
                             divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages "> 
                         <img class="avatar" src="./media/avatar.png" alt="">
-                        <div class="message__wrapper admin"> 
+                        <div class="message__wrapper admin" style="max-width:${divChat.offsetWidth - 90}px"> 
                         <p class="user__login admin"> ${object.userName} </p> 
-                        <p class="user__message admin"> ${object.message}</p>
+                        <p class="user__message admin" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p>
                         </div>
                         </div>`;
                         } else {
                             divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages "> 
                         <img class='avatar' src="${object.avatar}" alt=""> 
-                        <div class="message__wrapper admin"> 
+                        <div class="message__wrapper admin" style="max-width:${divChat.offsetWidth - 90}px"> 
                         <p class="user__login admin"> ${object.userName} </p> 
-                        <p class="user__message admin"> ${object.message}</p> 
+                        <p class="user__message admin" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p> 
                         </div>
                         </div>`;
                         }
@@ -215,17 +214,17 @@ function chat() {
                         if (object.avatar == null) {
                             divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
                         <img class='avatar' src="./media/avatar.png" alt=""> 
-                        <div class="message__wrapper">
+                        <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
                         <p class="user__login"> ${object.userName} </p> 
-                        <p class="user__message"> ${object.message}</p> 
+                        <p class="user__message" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p> 
                         </div>
                         </div>`;
                         } else {
                             divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
                         <img class='avatar' src="${object.avatar}" alt=""> 
-                        <div class="message__wrapper">
+                        <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
                         <p class="user__login"> ${object.userName} </p> 
-                        <p class="user__message"> ${object.message}</p> 
+                        <p class="user__message" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p> 
                         </div>
                         </div>`;
                         }
@@ -234,7 +233,7 @@ function chat() {
                     let answerMsg = messagesArray[object.answerTo];
                     divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
                 <img class="avatar" src="${object.avatar}" alt="">
-                <div class="message__wrapper admin "> 
+                <div class="message__wrapper admin" style="max-width:${divChat.offsetWidth - 90}px"> 
                 <div class="answer">
                     <div class="leftLine">
                     </div>
@@ -249,14 +248,7 @@ function chat() {
             }
         }
 
-        //Ширина сообщений
-        let wrapperWidth = document.querySelectorAll('.message__wrapper');
-        console.log(wrapperWidth);
-        wrapperWidth.forEach(element => {
-            if (element.offsetWidth >= divPlugin.offsetWidth) {
-                element.style.width = `${divPlugin.offsetWidth - 100}px`;
-            }
-        });
+
     }
 }
 
@@ -278,14 +270,14 @@ function sendMessage(textArea, divPlugin) {
     if (message.value != '') {
         messageObjects.message = message.value;
         messageObjects.id = `${messagesArray.length}`;
-
+        let divChat = document.querySelector(".chat")
 
         //Вставка сообщения
         chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
         <img class='avatar' src="${messageObjects.avatar}" alt=""> 
-        <div class="message__wrapper">
+        <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
         <p class="user__login"> ${messageObjects.userName} </p>  
-        <p class="user__message" style="max-width: ${divPlugin.offsetWidth - 100}px"> ${messageObjects.message}</p> 
+        <p class="user__message" > ${messageObjects.message}</p> 
         </div>
         </div>`;
 
@@ -316,16 +308,11 @@ window.onresize = function resize() {
     let vjshw = document.querySelector('.vjs-chat');
     let video = document.querySelector('.vjs-text-track-display');
     vjshw.style.height = video.offsetHeight + 'px';
-    let divChat = document.querySelector('.vjs-chat')
     let wrapperWidth = document.querySelectorAll('.message__wrapper');
     console.log(wrapperWidth);
-    wrapperWidth.forEach(element => {
-        if (element.offsetWidth >= divChat.offsetWidth) {
-            element.style.width = `${divChat.offsetWidth - 100}px`;
-        }
-
+    wrapperWidth.forEach(function (item, i, arr) {
+        item.style.maxWidth = `${vjshw.offsetWidth - 90}px`;
     });
-
 }
 
 //Регистрация плагина
