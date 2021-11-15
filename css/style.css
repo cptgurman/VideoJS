@@ -55,24 +55,24 @@ body {
     padding: 50px 20px;
 }
 
-.parallax {
+.background {
     min-height: 100vh;
 }
 
-.parallax__body {
+.background__body {
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
 }
-.parallax__container {
+.background__container {
     text-transform: uppercase;
     position: relative;
     z-index: 2;
 }
 
-.parallax_label {
+.background_label {
     color: white;
     display: flex;
     font-size: 18px;
@@ -80,7 +80,7 @@ body {
     margin: 0px 0px 30px 0px;
     align-items: center;   
 }
-.parallax_label::before{
+.background_label::before{
     flex: 0 0 70px ;
     content: "";
     margin: 0px 30px 0px 0px;
@@ -88,10 +88,12 @@ body {
     height: 1px;
 }
 
-.parallax_title {
+.background_title {
     font-size: 88px;
 }
-.parallax__images {
+
+.background__images {
+    background: url(../media/space.jpg) top / cover no-repeat;
     position: absolute;
     width: 120%;
     height: 120%;
@@ -101,54 +103,12 @@ body {
 
 }
 
-.images-parallax__item {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 100%;
-    top: 0;
-    left: 0;
-}
-.images-parallax__clouds,
-.images-parallax__mountains,
-.images-parallax__human{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-
-}
-
-.images-parallax__clouds {
-    background: url(../img/1.png) top / cover no-repeat;
-    top: 10%;
-
-}
-.images-parallax__mountains {
-    background: url(../img/3.png) top / cover no-repeat;
-    top: -10%;
-    z-index: 2;
-
-}
-.images-parallax__human {
-    background: url(../img/2.png) top / cover no-repeat;
-    top: 0%;
-    z-index: 3;
-}
-
-@media (max-aspect-ratio: 3/2){
-    .images-parallax__human{
-        background-position: 20% top;
-    }
-}
-
 .content {
     background-color: rgb(0, 0, 0);
     position: relative;
     z-index: 2;
     display: grid;
     grid-template:100px 1fr 20px/ 50px 1fr 1fr 1fr 50px;
-    
 }
 
 .content::before {
@@ -163,7 +123,7 @@ body {
     background: linear-gradient(180deg, rgb(46, 46, 46, 0) 5%, #0b1d26 100% );
 }
 
-.content__title {
+.title {
     font-size: 35px;
     margin: 0px 0px 0px 0px;
     grid-row: 1/2;
@@ -173,11 +133,15 @@ body {
     margin-top: 20px;
 }
 
-.content__video{
+.video{
     grid-column: 2/5;
     grid-row: 2/3;
     z-index: 8;
     justify-items: center;
+}
+
+.svg-like{
+    fill:dodgerblue;
 }
 
 .vjs-chat{
