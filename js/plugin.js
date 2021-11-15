@@ -77,72 +77,96 @@ function chat() {
     //Проверка чата
     if (document.querySelector('.vjs-chat') == null) {
 
-        //Чат плагин
-        let divPlugin = document.createElement('div');//Создаем элемент
-        divPlugin.classList.add('vjs-chat');//Добавляем класс
+        // Чат плагин
         let vjs = document.querySelector('.video-js');
-        let video = document.querySelector('.vjs-text-track-display');
-        divPlugin.style.height = video.offsetHeight + 'px';//Высота чата
-        vjs.prepend(divPlugin);
+        let vjsChat=
+        `<div class="vjs-chat"> 
+            <div class="sendMsg">
+                <img class="like" src="./media/like.png">
+                <div class="msgWrapper">
+                    <textarea class="message" placeholder="Добавить комментарий"></textarea>
+                    <img class="avatarIco" src="./media/avatar1.png">
+                </div>
+            </div>
+            <div class="chat"></div> 
+            <div class="pinned"> 
+                <div class="pinnedLine"></div>
+                <img class="pinnedIco" src="./media/pin.png"> 
+                <div class="pinnedMess">
+                    <div class="pinnedName">Admin</div>
+                    <div class="pinnedText">Дополнительная скидка 15% по промокоду ВЕСНА15</div>
+                </div>
+            </div>  
+        </div>`;
+        vjs.insertAdjacentHTML("beforeEnd", vjsChat);
 
-        //Чат
-        let divChat = document.createElement('div');
-        divChat.classList.add('chat');
-        divPlugin.prepend(divChat);
-        divChat.innerHTML = '';
+        // let divPlugin = document.createElement('div');//Создаем элемент
+        // divPlugin.classList.add('vjs-chat');//Добавляем класс
+        // let vjs = document.querySelector('.video-js');
+        // let video = document.querySelector('.vjs-text-track-display');
+        // divPlugin.style.height = video.offsetHeight + 'px';//Высота чата
+        // vjs.prepend(divPlugin);
 
-        //Закрепленное сообщение (каркас)
-        let divPinned = document.createElement('div');
-        divPinned.classList.add('pinned');
-        divPlugin.prepend(divPinned);
-        divPinned.innerHTML = '';
+        // //Чат
+        // let divChat=`<div class="chat"></div>`;
 
-        //Закрепленное сообщение (каркас для сообщения)
-        let divPinnedMess = document.createElement('div');
-        divPinnedMess.classList.add('pinnedMess');
-        divPinned.prepend(divPinnedMess);
-        divPinnedMess.innerHTML = '';
+        // let divChat = document.createElement('div');
+        // divChat.classList.add('chat');
+        // divPlugin.prepend(divChat);
+        // divChat.innerHTML = '';
 
+        // //Закрепленное сообщение (каркас)
+        // let divPinned = document.createElement('div');
+        // divPinned.classList.add('pinned');
+        // divPlugin.prepend(divPinned);
+        // divPinned.innerHTML = '';
 
-        //Закрепленное сообщение (текст)
-        let divPinnedText = document.createElement('div');
-        divPinnedText.classList.add('pinnedText');
-        divPinnedMess.prepend(divPinnedText);
-        divPinnedText.innerHTML = '';
-
-        //Закрепленное сообщение (имя)
-        let divPinnedName = document.createElement('div');
-        divPinnedName.classList.add('pinnedName');
-        divPinnedMess.prepend(divPinnedName);
-        divPinnedName.innerHTML = '';
-
-        //Закрепленное сообщение (иконка)
-        let divPinnedIco = document.createElement('img');
-        divPinnedIco.classList.add('pinnedIco');
-        divPinnedIco.src = "./media/pin.png";
-        divPinned.prepend(divPinnedIco);
-
-        //Закрепленное сообщение (линия)
-        let divPinnedLine = document.createElement('div');
-        divPinnedLine.classList.add('pinnedLine');
-        divPinned.prepend(divPinnedLine);
+        // //Закрепленное сообщение (каркас для сообщения)
+        // let divPinnedMess = document.createElement('div');
+        // divPinnedMess.classList.add('pinnedMess');
+        // divPinned.prepend(divPinnedMess);
+        // divPinnedMess.innerHTML = '';
 
 
-        //Блок для отправки
-        let divSendMsg = document.createElement('div');
-        divSendMsg.classList.add('sendMsg');
-        divPlugin.prepend(divSendMsg);
+        // //Закрепленное сообщение (текст)
+        // let divPinnedText = document.createElement('div');
+        // divPinnedText.classList.add('pinnedText');
+        // divPinnedMess.prepend(divPinnedText);
+        // divPinnedText.innerHTML = '';
 
-        //Блок сообщение + аватарка
-        let divMes = document.createElement('div');
-        divMes.classList.add('msgWrapper');
-        divSendMsg.prepend(divMes);
+        // //Закрепленное сообщение (имя)
+        // let divPinnedName = document.createElement('div');
+        // divPinnedName.classList.add('pinnedName');
+        // divPinnedMess.prepend(divPinnedName);
+        // divPinnedName.innerHTML = '';
 
-        //аватарка
-        let avatarIco = document.createElement('img');
-        avatarIco.classList.add('avatarIco');
-        avatarIco.src = "./media/avatar1.png";
-        divMes.prepend(avatarIco);
+        // //Закрепленное сообщение (иконка)
+        // let divPinnedIco = document.createElement('img');
+        // divPinnedIco.classList.add('pinnedIco');
+        // divPinnedIco.src = "./media/pin.png";
+        // divPinned.prepend(divPinnedIco);
+
+        // //Закрепленное сообщение (линия)
+        // let divPinnedLine = document.createElement('div');
+        // divPinnedLine.classList.add('pinnedLine');
+        // divPinned.prepend(divPinnedLine);
+
+
+        // //Блок для отправки
+        // let divSendMsg = document.createElement('div');
+        // divSendMsg.classList.add('sendMsg');
+        // divPlugin.prepend(divSendMsg);
+
+        // //Блок сообщение + аватарка
+        // let divMes = document.createElement('div');
+        // divMes.classList.add('msgWrapper');
+        // divSendMsg.prepend(divMes);
+
+        // //аватарка
+        // let avatarIco = document.createElement('img');
+        // avatarIco.classList.add('avatarIco');
+        // avatarIco.src = "./media/avatar1.png";
+        // divMes.prepend(avatarIco);
 
         //Текст сообщения
         let textArea = document.createElement('textarea');
@@ -284,10 +308,10 @@ function sendMessage(textArea, divPlugin) {
     }
 }
 
-//очистить storage
-function clearStorage() {
-    localStorage.clear();
-}
+// //очистить storage
+// function clearStorage() {
+//     localStorage.clear();
+// }
 
 //изменение размеров чата
 window.onresize = function resize() {
