@@ -63,24 +63,27 @@ function chat() {
                 }
             },
         });
+
         //регистрируем кнопку
         videojs.registerComponent('ChatButton', MyButton);
         let player = videojs('my-player');
         player.getChild('controlBar').addChild('ChatButton', {});
 
         //Иконка
-        document.querySelector('.chatButton .vjs-icon-placeholder').innerHTML = `<svg class="svg-like" width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                                <path d = "M19.75 6C19.7495 5.60231 19.5914 5.22105 19.3102 4.93984C19.029 4.65864 18.6477 4.50045 18.25 4.5H15.25V1.5C15.2495 1.10231 15.0914 0.721048 14.8102 0.439842C14.529 0.158636 14.1477 0.000454817 13.75 0H1.75C1.35231 0.000454817 0.971048 0.158636 0.689842 0.439842C0.408636 0.721048 0.250455 1.10231 0.25 1.5V13.5C0.249996 13.6416 0.290079 13.7803 0.365614 13.9001C0.441148 14.0199 0.549046 14.1158 0.676829 14.1768C0.804611 14.2378 0.947055 14.2614 1.08768 14.2449C1.22831 14.2283 1.36138 14.1723 1.4715 14.0832L4.75 11.4328L4.75009 14.25C4.75055 14.6477 4.90873 15.029 5.18994 15.3102C5.47114 15.5914 5.85241 15.7495 6.25009 15.75H15.024L18.5286 18.5832C18.6387 18.6723 18.7718 18.7283 18.9124 18.7449C19.053 18.7614 19.1955 18.7378 19.3233 18.6768C19.451 18.6158 19.5589 18.5199 19.6345 18.4001C19.71 18.2803 19.7501 18.1416 19.7501 18L19.75 6ZM15.7607 14.4168C15.6272 14.3089 15.4608 14.25 15.2892 14.25H6.25009L6.25 11.25H13.75C14.1477 11.2495 14.529 11.0914 14.8102 10.8102C15.0914 10.529 15.2495 10.1477 15.25 9.75V6H18.25L18.2501 16.4292L15.7607 14.4168Z"/>
-                                                                                </svg>`;
+        document.querySelector('.chatButton .vjs-icon-placeholder').innerHTML =
+            `<svg class="svg-like" width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d = "M19.75 6C19.7495 5.60231 19.5914 5.22105 19.3102 4.93984C19.029 4.65864 18.6477 4.50045 18.25 4.5H15.25V1.5C15.2495 1.10231 15.0914 0.721048 14.8102 0.439842C14.529 0.158636 14.1477 0.000454817 13.75 0H1.75C1.35231 0.000454817 0.971048 0.158636 0.689842 0.439842C0.408636 0.721048 0.250455 1.10231 0.25 1.5V13.5C0.249996 13.6416 0.290079 13.7803 0.365614 13.9001C0.441148 14.0199 0.549046 14.1158 0.676829 14.1768C0.804611 14.2378 0.947055 14.2614 1.08768 14.2449C1.22831 14.2283 1.36138 14.1723 1.4715 14.0832L4.75 11.4328L4.75009 14.25C4.75055 14.6477 4.90873 15.029 5.18994 15.3102C5.47114 15.5914 5.85241 15.7495 6.25009 15.75H15.024L18.5286 18.5832C18.6387 18.6723 18.7718 18.7283 18.9124 18.7449C19.053 18.7614 19.1955 18.7378 19.3233 18.6768C19.451 18.6158 19.5589 18.5199 19.6345 18.4001C19.71 18.2803 19.7501 18.1416 19.7501 18L19.75 6ZM15.7607 14.4168C15.6272 14.3089 15.4608 14.25 15.2892 14.25H6.25009L6.25 11.25H13.75C14.1477 11.2495 14.529 11.0914 14.8102 10.8102C15.0914 10.529 15.2495 10.1477 15.25 9.75V6H18.25L18.2501 16.4292L15.7607 14.4168Z"/>
+            </svg>`;
     }
 
     //Проверка чата
     if (document.querySelector('.vjs-chat') == null) {
 
         // Чат плагин
+        let video = document.querySelector('.vjs-text-track-display');
         let vjs = document.querySelector('.video-js');
-        let vjsChat=
-        `<div class="vjs-chat"> 
+        let vjsChat =
+            `<div class="vjs-chat" style="height:${video.offsetHeight}px"> 
             <div class="sendMsg">
                 <img class="like" src="./media/like.png">
                 <div class="msgWrapper">
@@ -93,90 +96,19 @@ function chat() {
                 <div class="pinnedLine"></div>
                 <img class="pinnedIco" src="./media/pin.png"> 
                 <div class="pinnedMess">
-                    <div class="pinnedName">Admin</div>
-                    <div class="pinnedText">Дополнительная скидка 15% по промокоду ВЕСНА15</div>
+                    <div class="pinnedName"></div>
+                    <div class="pinnedText"></div>
                 </div>
             </div>  
         </div>`;
         vjs.insertAdjacentHTML("beforeEnd", vjsChat);
 
-        // let divPlugin = document.createElement('div');//Создаем элемент
-        // divPlugin.classList.add('vjs-chat');//Добавляем класс
-        // let vjs = document.querySelector('.video-js');
-        // let video = document.querySelector('.vjs-text-track-display');
-        // divPlugin.style.height = video.offsetHeight + 'px';//Высота чата
-        // vjs.prepend(divPlugin);
-
-        // //Чат
-        // let divChat=`<div class="chat"></div>`;
-
-        // let divChat = document.createElement('div');
-        // divChat.classList.add('chat');
-        // divPlugin.prepend(divChat);
-        // divChat.innerHTML = '';
-
-        // //Закрепленное сообщение (каркас)
-        // let divPinned = document.createElement('div');
-        // divPinned.classList.add('pinned');
-        // divPlugin.prepend(divPinned);
-        // divPinned.innerHTML = '';
-
-        // //Закрепленное сообщение (каркас для сообщения)
-        // let divPinnedMess = document.createElement('div');
-        // divPinnedMess.classList.add('pinnedMess');
-        // divPinned.prepend(divPinnedMess);
-        // divPinnedMess.innerHTML = '';
-
-
-        // //Закрепленное сообщение (текст)
-        // let divPinnedText = document.createElement('div');
-        // divPinnedText.classList.add('pinnedText');
-        // divPinnedMess.prepend(divPinnedText);
-        // divPinnedText.innerHTML = '';
-
-        // //Закрепленное сообщение (имя)
-        // let divPinnedName = document.createElement('div');
-        // divPinnedName.classList.add('pinnedName');
-        // divPinnedMess.prepend(divPinnedName);
-        // divPinnedName.innerHTML = '';
-
-        // //Закрепленное сообщение (иконка)
-        // let divPinnedIco = document.createElement('img');
-        // divPinnedIco.classList.add('pinnedIco');
-        // divPinnedIco.src = "./media/pin.png";
-        // divPinned.prepend(divPinnedIco);
-
-        // //Закрепленное сообщение (линия)
-        // let divPinnedLine = document.createElement('div');
-        // divPinnedLine.classList.add('pinnedLine');
-        // divPinned.prepend(divPinnedLine);
-
-
-        // //Блок для отправки
-        // let divSendMsg = document.createElement('div');
-        // divSendMsg.classList.add('sendMsg');
-        // divPlugin.prepend(divSendMsg);
-
-        // //Блок сообщение + аватарка
-        // let divMes = document.createElement('div');
-        // divMes.classList.add('msgWrapper');
-        // divSendMsg.prepend(divMes);
-
-        // //аватарка
-        // let avatarIco = document.createElement('img');
-        // avatarIco.classList.add('avatarIco');
-        // avatarIco.src = "./media/avatar1.png";
-        // divMes.prepend(avatarIco);
-
-        //Текст сообщения
-        let textArea = document.createElement('textarea');
-        textArea.classList.add('message');
-        divMes.prepend(textArea);
-        textArea.placeholder = 'Добавить комментарий';
         //Отправка по Enter
+        let chat = document.querySelector('.vjs-chat')
+        let textArea = document.querySelector('.message')
         textArea.addEventListener('keydown', e => {
             if (e.keyCode == 13) {
-                sendMessage(textArea, divPlugin);
+                sendMessage(textArea, chat);
             }
         });
         //Изменение высоты сообщения
@@ -184,76 +116,52 @@ function chat() {
             textArea.style.height = 'auto';
             let txtheight = e.target.scrollHeight;
             textArea.style.height = `${txtheight}px`;
-            divPlugin.style.gridTemplate = `auto 1fr ${txtheight + 25}px / 1fr`;
+            chat.style.gridTemplate = `auto 1fr ${txtheight + 25}px / 1fr`;
         });
-
-        //Кнопка лайк
-        let likeButton = document.createElement('img');
-        likeButton.classList.add('like');
-        likeButton.src = './media/like.png'
-        divSendMsg.prepend(likeButton);
 
 
         //Выгрузка сообщений
-        for (let object of messagesArray) {
-            if (object.isPinned == true) {
-                divPinnedText.innerHTML = object.message;
-                divPinnedName.innerHTML = object.userName;
-
+        let messagePlace = document.querySelector('.chat')
+        for (let message of messagesArray) {
+            if (message.isPinned) {
+                document.querySelector('.pinnedText').innerHTML = message.message;
+                document.querySelector('.pinnedName').innerHTML = message.userName;
             } else {
-                if (object.answerTo == null) {
-                    if (object.isAdmin == true) {
-                        if (object.avatar == null) {
-                            divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages "> 
-                        <img class="avatar" src="./media/avatar.png" alt="">
-                        <div class="message__wrapper admin" style="max-width:${divChat.offsetWidth - 90}px"> 
-                        <p class="user__login admin"> ${object.userName} </p> 
-                        <p class="user__message admin" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p>
-                        </div>
-                        </div>`;
-                        } else {
-                            divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages "> 
-                        <img class='avatar' src="${object.avatar}" alt=""> 
-                        <div class="message__wrapper admin" style="max-width:${divChat.offsetWidth - 90}px"> 
-                        <p class="user__login admin"> ${object.userName} </p> 
-                        <p class="user__message admin" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p> 
-                        </div>
-                        </div>`;
-                        }
+                if (message.answerTo == null) {
+                    if (message.isAdmin == true) {
+                        let html = `<div class="chat_messages "> 
+                            <img class='avatar' src="${message.avatar != null ? message.avatar : "./media/avatar.png"}" alt="">
+                            <div class="message__wrapper admin" style="max-width:${chat.offsetWidth - 90}px"> 
+                            <p class="user__login admin"> ${message.userName} </p> 
+                            <p class="user__message admin" style="max-width:${chat.offsetWidth - 90}px"> ${message.message}</p>
+                            </div>
+                            </div>`
+                        messagePlace.insertAdjacentHTML("beforeEnd", html);
                     } else {
-                        if (object.avatar == null) {
-                            divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                        <img class='avatar' src="./media/avatar.png" alt=""> 
-                        <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
-                        <p class="user__login"> ${object.userName} </p> 
-                        <p class="user__message" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p> 
-                        </div>
-                        </div>`;
-                        } else {
-                            divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                        <img class='avatar' src="${object.avatar}" alt=""> 
-                        <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
-                        <p class="user__login"> ${object.userName} </p> 
-                        <p class="user__message" style="max-width:${divChat.offsetWidth - 90}px"> ${object.message}</p> 
-                        </div>
-                        </div>`;
-                        }
+                        let html = `<div class="chat_messages"> 
+                            <img class='avatar' src="${message.avatar != null ? message.avatar : "./media/avatar.png"}" alt="">  
+                            <div class="message__wrapper" style="max-width:${chat.offsetWidth - 90}px">
+                            <p class="user__login"> ${message.userName} </p> 
+                            <p class="user__message" style="max-width:${chat.offsetWidth - 90}px"> ${message.message}</p> 
+                            </div>
+                            </div>`;
+                        messagePlace.insertAdjacentHTML("beforeEnd", html);
                     }
                 } else {
-                    let answerMsg = messagesArray[object.answerTo];
-                    divChat.innerHTML = divChat.innerHTML + `<div class="chat_messages"> 
-                <img class="avatar" src="${object.avatar}" alt="">
-                <div class="message__wrapper admin" style="max-width:${divChat.offsetWidth - 90}px"> 
-                <div class="answer">
-                    <div class="leftLine">
-                    </div>
-                    <p class="answer_user admin"> ${answerMsg.userName} </p> 
-                    <p class="answer_msg admin"> ${answerMsg.message} </p> 
-                </div>
-                    <p class="user__login admin"> ${object.userName} </p> 
-                    <p class="user__message admin"> ${object.message}</p>
-                </div>
-                </div>`;
+                    let answerMsg = messagesArray[message.answerTo];
+                    let html = `<div class="chat_messages"> 
+                                <img class="avatar" src="${message.avatar}" alt="">
+                                <div class="message__wrapper admin" style="max-width:${chat.offsetWidth - 90}px"> 
+                                <div class="answer">
+                                    <div class="leftLine"></div>
+                                    <p class="answer_user admin"> ${answerMsg.userName} </p> 
+                                    <p class="answer_msg admin"> ${answerMsg.message} </p> 
+                                </div>
+                                <p class="user__login admin"> ${message.userName} </p> 
+                                <p class="user__message admin"> ${message.message}</p>
+                                </div>
+                            </div>`
+                    messagePlace.insertAdjacentHTML("beforeEnd", html);
                 }
             }
         }
@@ -263,11 +171,11 @@ function chat() {
 }
 
 //Отправка сообщений и сохранение в localstorage
-function sendMessage(textArea, divPlugin) {
+function sendMessage(textArea) {
     let message = document.querySelector('.message'), //сообщение
         chat = document.querySelector('.chat');
 
-    let messageObjects = {
+    let messageObject = {
         "id": null,
         "userName": "Герман Креханов",
         "isPinned": false,
@@ -277,53 +185,45 @@ function sendMessage(textArea, divPlugin) {
         "answerTo": null
     };
 
-    if (message.value != '') {
-        messageObjects.message = message.value;
-        messageObjects.id = `${messagesArray.length}`;
-        let divChat = document.querySelector(".chat")
+    if (message.value === '') {
+        return alert('Не все поля заполнены!');
+    }
+    messageObject.message = message.value;
+    messageObject.id = `${messagesArray.length}`;
+    let divChat = document.querySelector(".chat")
 
-        //Вставка сообщения
-        chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
-        <img class='avatar' src="${messageObjects.avatar}" alt=""> 
+    //Вставка сообщения
+    chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
+        <img class='avatar' src="${messageObject.avatar}" alt=""> 
         <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
-        <p class="user__login"> ${messageObjects.userName} </p>  
-        <p class="user__message" > ${messageObjects.message}</p> 
+        <p class="user__login"> ${messageObject.userName} </p>  
+        <p class="user__message" > ${messageObject.message}</p> 
         </div>
         </div>`;
 
-        //Обнуление полей и возврат рамера
-        message.value = '';
-        message.blur();
-        textArea.style.height = 'auto';
-        divPlugin.style.gridTemplate = `auto 1fr auto / 1fr`;
+    //Обнуление полей и возврат рамера
+    message.value = '';
+    message.blur();
+    textArea.style.height = 'auto';
+    chat.style.gridTemplate = `auto 1fr auto / 1fr`;
 
 
-        //Запись в storage
-        messagesArray.push(messageObjects);
-        console.log(messagesArray);
-        localStorage.setItem('messages', JSON.stringify(messagesArray));
-
-    } else {
-        alert('Не все поля заполнены!');
-    }
+    //Запись в storage
+    messagesArray.push(messageObject);
+    localStorage.setItem('messages', JSON.stringify(messagesArray));
 }
-
-// //очистить storage
-// function clearStorage() {
-//     localStorage.clear();
-// }
 
 //изменение размеров чата
 window.onresize = function resize() {
-    let vjshw = document.querySelector('.vjs-chat');
+    let chatSize = document.querySelector('.vjs-chat');
     let video = document.querySelector('.vjs-text-track-display');
-    vjshw.style.height = video.offsetHeight + 'px';
+    chatSize.style.height = video.offsetHeight + 'px';
     let wrapperWidth = document.querySelectorAll('.message__wrapper');
-    console.log(wrapperWidth);
-    wrapperWidth.forEach(function (item, i, arr) {
-        item.style.maxWidth = `${vjshw.offsetWidth - 90}px`;
+    wrapperWidth.forEach(function (item) {
+        item.style.maxWidth = `${chatSize.offsetWidth - 90}px`;
     });
 }
+
 
 //Регистрация плагина
 videojs.registerPlugin('chat', chat);
