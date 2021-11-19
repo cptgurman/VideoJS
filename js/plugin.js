@@ -1,46 +1,47 @@
 
 "use strict"
-let messagesArray = [
-    {
-        "id": "0",
-        "userName": "Admin",
-        "isPinned": true,
-        "isAdmin": true,
-        "message": "Дополнительная скидка 15% по промокоду ВЕСНА15",
-        "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
-        "answerTo": null
-    }, {
-        "id": "1",
-        "userName": "Костя Морозов",
-        "isPinned": false,
-        "isAdmin": true,
-        "message": "Надюша начинай",
-        "avatar": "https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png",
-        "answerTo": null
-    }, {
-        "id": "2",
-        "userName": "Рузанна Комиссарова",
-        "isPinned": false,
-        "isAdmin": false,
-        "message": "Здравствуйте, как купить туфли?",
-        "avatar": null,
-        "answerTo": null
-    }, {
-        "id": "3",
-        "userName": "Admin",
-        "isPinned": false,
-        "isAdmin": true,
-        "message": "Здравствуйте! Можно перейти по ссылке на наш сайт и оформить заказ. Ссылки на товары под видео",
-        "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
-        "answerTo": "2"
-    }
-];
-
-//Список сообщений
-let parse = JSON.parse(localStorage.getItem("messages"));
-if (parse != null) messagesArray = parse;
-
 function chat() {
+    let messagesArray = [
+        {
+            "id": "0",
+            "userName": "Admin",
+            "isPinned": true,
+            "isAdmin": true,
+            "message": "Дополнительная скидка 15% по промокоду ВЕСНА15",
+            "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
+            "answerTo": null
+        }, {
+            "id": "1",
+            "userName": "Костя Морозов",
+            "isPinned": false,
+            "isAdmin": true,
+            "message": "Надюша начинай",
+            "avatar": "https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png",
+            "answerTo": null
+        }, {
+            "id": "2",
+            "userName": "Рузанна Комиссарова",
+            "isPinned": false,
+            "isAdmin": false,
+            "message": "Здравствуйте, как купить туфли?",
+            "avatar": null,
+            "answerTo": null
+        }, {
+            "id": "3",
+            "userName": "Admin",
+            "isPinned": false,
+            "isAdmin": true,
+            "message": "Здравствуйте! Можно перейти по ссылке на наш сайт и оформить заказ. Ссылки на товары под видео",
+            "avatar": "https://cdn-icons-png.flaticon.com/512/194/194938.png",
+            "answerTo": "2"
+        }
+    ];
+
+    //Список сообщений
+    let parse = JSON.parse(localStorage.getItem("messages"));
+    if (parse != null) messagesArray = parse;
+
+
     //Создаем кнопку если ее нет
     if (document.querySelector('.chatButton') == null) {
         let Button = videojs.getComponent('Button');
@@ -49,7 +50,6 @@ function chat() {
             constructor: function () {
                 Button.apply(this, arguments);
                 this.addClass('chatButton');
-
             },
             // открыть/закрыть чат по клику            
             handleClick: function () {
@@ -68,6 +68,7 @@ function chat() {
         videojs.registerComponent('ChatButton', MyButton);
         let player = videojs('my-player');
         player.getChild('controlBar').addChild('ChatButton', {});
+        player.on('play', chatVisible);
 
         //Иконка
         document.querySelector('.chatButton .vjs-icon-placeholder').innerHTML =
@@ -102,6 +103,7 @@ function chat() {
             </div>  
         </div>`;
         vjs.insertAdjacentHTML("beforeEnd", vjsChat);
+        document.querySelector('.vjs-chat').style.visibility = 'hidden';
 
         //Отправка по Enter
         let chat = document.querySelector('.vjs-chat')
@@ -155,32 +157,31 @@ function chat() {
             }
         }
     }
-}
 
-//Отправка сообщений и сохранение в localstorage
-function sendMessage(textArea) {
-    let message = document.querySelector('.message'), //сообщение
-        chat = document.querySelector('.chat');
+    //Отправка сообщений и сохранение в localstorage
+    function sendMessage(textArea) {
+        let message = document.querySelector('.message'), //сообщение
+            chat = document.querySelector('.chat');
 
-    let messageObject = {
-        "id": null,
-        "userName": "Герман Креханов",
-        "isPinned": false,
-        "isAdmin": false,
-        "message": null,
-        "avatar": "./media/avatar1.png",
-        "answerTo": null
-    };
+        let messageObject = {
+            "id": null,
+            "userName": "Герман Креханов",
+            "isPinned": false,
+            "isAdmin": false,
+            "message": null,
+            "avatar": "./media/avatar1.png",
+            "answerTo": null
+        };
 
-    if (message.value === '') {
-        return alert('Не все поля заполнены!');
-    }
-    messageObject.message = message.value;
-    messageObject.id = `${messagesArray.length}`;
-    let divChat = document.querySelector(".chat")
+        if (message.value === '') {
+            return alert('Не все поля заполнены!');
+        }
+        messageObject.message = message.value;
+        messageObject.id = `${messagesArray.length}`;
+        let divChat = document.querySelector(".chat")
 
-    //Вставка сообщения
-    chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
+        //Вставка сообщения
+        chat.innerHTML = chat.innerHTML + `<div class="chat_messages" > 
         <img class='avatar' src="${messageObject.avatar}" alt=""> 
         <div class="message__wrapper" style="max-width:${divChat.offsetWidth - 90}px">
         <p class="user__login"> ${messageObject.userName} </p>  
@@ -188,28 +189,34 @@ function sendMessage(textArea) {
         </div>
         </div>`;
 
-    //Обнуление полей и возврат рамера
-    message.value = '';
-    message.blur();
-    textArea.style.height = 'auto';
-    chat.style.gridTemplate = `auto 1fr auto / 1fr`;
+        //Обнуление полей и возврат рамера
+        message.value = '';
+        message.blur();
+        textArea.style.height = 'auto';
+        chat.style.gridTemplate = `auto 1fr auto / 1fr`;
 
-    //Запись в storage
-    messagesArray.push(messageObject);
-    localStorage.setItem('messages', JSON.stringify(messagesArray));
+        //Запись в storage
+        messagesArray.push(messageObject);
+        localStorage.setItem('messages', JSON.stringify(messagesArray));
+    }
+
+    //изменение размеров чата
+    function resizeChat() {
+        let chatSize = document.querySelector('.vjs-chat');
+        let video = document.querySelector('.vjs-text-track-display');
+        chatSize.style.height = video.offsetHeight + 'px';
+        let wrapperWidth = document.querySelectorAll('.message__wrapper');
+        wrapperWidth.forEach(function (item) {
+            item.style.maxWidth = `${chatSize.offsetWidth - 90}px`;
+        });
+    }
+    window.addEventListener('resize', resizeChat);
+
+    //chat по кнопке play
+    function chatVisible() {
+        document.querySelector('.vjs-chat').style.visibility = 'visible';
+    }
+
 }
-
-//изменение размеров чата
-function resizeChat() {
-    let chatSize = document.querySelector('.vjs-chat');
-    let video = document.querySelector('.vjs-text-track-display');
-    chatSize.style.height = video.offsetHeight + 'px';
-    let wrapperWidth = document.querySelectorAll('.message__wrapper');
-    wrapperWidth.forEach(function (item) {
-        item.style.maxWidth = `${chatSize.offsetWidth - 90}px`;
-    });
-}
-window.addEventListener('resize', resizeChat);
-
 //Регистрация плагина
 videojs.registerPlugin('chat', chat);

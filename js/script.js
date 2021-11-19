@@ -10,21 +10,7 @@ window.onload = function () {
             'fullscreenToggle': false,
         }
     });
+
     let player = videojs('my-player');
-
-    //chat по кнопке play
-    player.on('play', chat);
+    player.chat()
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
