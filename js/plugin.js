@@ -13,7 +13,7 @@ let messagesArray = [
         "id": "1",
         "userName": "Костя Морозов",
         "isPinned": false,
-        "isAdmin": false,
+        "isAdmin": true,
         "message": "Надюша начинай",
         "avatar": "https://www.pngarts.com/files/5/User-Avatar-PNG-Free-Download.png",
         "answerTo": null
@@ -111,6 +111,7 @@ function chat() {
                 sendMessage(textArea, chat);
             }
         });
+
         //Изменение высоты сообщения
         textArea.addEventListener('keyup', e => {
             textArea.style.height = 'auto';
@@ -118,7 +119,6 @@ function chat() {
             textArea.style.height = `${txtheight}px`;
             chat.style.gridTemplate = `auto 1fr ${txtheight + 25}px / 1fr`;
         });
-
 
         //Выгрузка сообщений
         let messagePlace = document.querySelector('.chat')
@@ -128,25 +128,14 @@ function chat() {
                 document.querySelector('.pinnedName').innerHTML = message.userName;
             } else {
                 if (message.answerTo == null) {
-                    if (message.isAdmin == true) {
-                        let html = `<div class="chat_messages "> 
+                    let html = `<div class="chat_messages "> 
                             <img class='avatar' src="${message.avatar != null ? message.avatar : "./media/avatar.png"}" alt="">
-                            <div class="message__wrapper admin" style="max-width:${chat.offsetWidth - 90}px"> 
-                            <p class="user__login admin"> ${message.userName} </p> 
-                            <p class="user__message admin" style="max-width:${chat.offsetWidth - 90}px"> ${message.message}</p>
+                            <div class="message__wrapper ${message.isAdmin ? "admin" : ""}" style="max-width:${chat.offsetWidth - 90}px"> 
+                            <p class="user__login"> ${message.userName} </p> 
+                            <p class="user__message" style="max-width:${chat.offsetWidth - 90}px"> ${message.message}</p>
                             </div>
                             </div>`
-                        messagePlace.insertAdjacentHTML("beforeEnd", html);
-                    } else {
-                        let html = `<div class="chat_messages"> 
-                            <img class='avatar' src="${message.avatar != null ? message.avatar : "./media/avatar.png"}" alt="">  
-                            <div class="message__wrapper" style="max-width:${chat.offsetWidth - 90}px">
-                            <p class="user__login"> ${message.userName} </p> 
-                            <p class="user__message" style="max-width:${chat.offsetWidth - 90}px"> ${message.message}</p> 
-                            </div>
-                            </div>`;
-                        messagePlace.insertAdjacentHTML("beforeEnd", html);
-                    }
+                    messagePlace.insertAdjacentHTML("beforeEnd", html);
                 } else {
                     let answerMsg = messagesArray[message.answerTo];
                     let html = `<div class="chat_messages"> 
@@ -165,8 +154,6 @@ function chat() {
                 }
             }
         }
-
-
     }
 }
 
@@ -207,14 +194,13 @@ function sendMessage(textArea) {
     textArea.style.height = 'auto';
     chat.style.gridTemplate = `auto 1fr auto / 1fr`;
 
-
     //Запись в storage
     messagesArray.push(messageObject);
     localStorage.setItem('messages', JSON.stringify(messagesArray));
 }
 
 //изменение размеров чата
-window.onresize = function resize() {
+function resizeChat() {
     let chatSize = document.querySelector('.vjs-chat');
     let video = document.querySelector('.vjs-text-track-display');
     chatSize.style.height = video.offsetHeight + 'px';
@@ -223,7 +209,7 @@ window.onresize = function resize() {
         item.style.maxWidth = `${chatSize.offsetWidth - 90}px`;
     });
 }
-
+window.addEventListener('resize', resizeChat);
 
 //Регистрация плагина
 videojs.registerPlugin('chat', chat);
